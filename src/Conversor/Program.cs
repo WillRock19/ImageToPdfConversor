@@ -14,8 +14,8 @@ namespace Conversor
         {
             ConfigureServiceProvider();
 
-            var logger = _serviceProvider.GetService<ILogger<Program>>();
-            logger.LogInformation("Aplicação iniciada com sucesso!");
+            //var logger = _serviceProvider.GetService<ILogger<Program>>();
+            //logger.LogInformation("Aplicação iniciada com sucesso!");
 
             Console.WriteLine("Insira o caminho da pasta com as imagens.");
             var contentFolderPath = Console.ReadLine();
@@ -37,7 +37,7 @@ namespace Conversor
             _serviceProvider = new ServiceCollection()
                 .AddLogging(LogConfiguration())
                 .AddSingleton<ConvertionManager>()
-                .AddSingleton<IFileSystem>()
+                .AddSingleton<IFileSystem, FileSystem>()
                 .AddSingleton<ImagesReader>()
                 .AddSingleton<PdfConverter>()
                 .BuildServiceProvider();
