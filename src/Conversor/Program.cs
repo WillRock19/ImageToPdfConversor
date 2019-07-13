@@ -1,4 +1,6 @@
 ﻿using Conversor.Services;
+using Converter.Models;
+using iText.Kernel.Pdf;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
 using System;
@@ -9,14 +11,10 @@ namespace Conversor
     class Program
     {
         private static IServiceProvider _serviceProvider;
+        private static UserInput _userInput;
 
         static void Main(string[] args)
         {
-            ConfigureServiceProvider();
-
-            //var logger = _serviceProvider.GetService<ILogger<Program>>();
-            //logger.LogInformation("Aplicação iniciada com sucesso!");
-
             Console.WriteLine("Insira o caminho da pasta com as imagens.");
             var contentFolderPath = Console.ReadLine();
 
@@ -24,11 +22,33 @@ namespace Conversor
             var resultFileName = Console.ReadLine();
 
             Console.WriteLine("Insira o caminho em que quer salvar o PDF gerado.");
-            var resultPdfFolderPath = Console.ReadLine();
+            var pathToSavePdfGenerated = Console.ReadLine();
 
-            var manager = _serviceProvider.GetService<ConvertionManager>();
-            manager.StartProcess(contentFolderPath, resultFileName, resultPdfFolderPath);
+            _userInput = new UserInput
+            {
+                ImagesPath = contentFolderPath,
+                PathToSavePdfGenerated = pathToSavePdfGenerated,
+                PdfFileName = resultFileName
+            };
 
+            try {
+                ConfigureServiceProvider();
+
+                var manager = _serviceProvider.GetService<ConvertionManager>();
+                manager.StartProcess(contentFolderPath);
+            }
+            catch (Exception e) {
+
+                ILogger<Program> logger = null;
+
+                if (_serviceProvider != null)
+                    logger = _serviceProvider.GetService<ILogger<Program>>();
+                else
+                    logger = new Logger<Program>(new LoggerFactory());
+
+                logger.LogError("Uma exceção interna ocorreu.");
+                logger.LogError($"Exceção: {e.Message}");
+            }
             Console.ReadKey();
         }
 
@@ -39,7 +59,8 @@ namespace Conversor
                 .AddSingleton<ConvertionManager>()
                 .AddSingleton<IFileSystem, FileSystem>()
                 .AddSingleton<ImagesReader>()
-                .AddSingleton<PdfConverter>()
+                .AddSingleton<PdfGenerator>()
+                .AddSingleton(x => new PdfDocument(new PdfWriter(_userInput.GenerateGeneratedPdfCompletePath())))
                 .BuildServiceProvider();
         }
 

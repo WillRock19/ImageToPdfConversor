@@ -7,9 +7,9 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "src", "src", "{B8BC8A4C-493
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "tests", "tests", "{442D79A1-347D-4AE1-A8E5-071771AC6923}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Conversor", "src\Conversor\Conversor.csproj", "{7DB50D25-D5DA-4D23-9FA2-FE05563A8A79}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Converter", "src\Conversor\Converter.csproj", "{7DB50D25-D5DA-4D23-9FA2-FE05563A8A79}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Conversor.Tests.Unidade", "tests\Conversor.Tests.Unidade\Conversor.Tests.Unidade.csproj", "{B622034D-0E68-45BA-9EA8-B5FDD32B0182}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Conversor.Tests.Unidade", "tests\Conversor.Tests.Unidade\Conversor.Tests.Unidade.csproj", "{B622034D-0E68-45BA-9EA8-B5FDD32B0182}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

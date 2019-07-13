@@ -1,4 +1,5 @@
-﻿using Microsoft.Extensions.Logging;
+﻿using Converter.Models;
+using Microsoft.Extensions.Logging;
 
 namespace Conversor.Services
 {
@@ -6,16 +7,19 @@ namespace Conversor.Services
     {
         private readonly ImagesReader _imagesReader;
         private readonly ILogger<ConvertionManager> _logger;
-        private readonly PdfConverter _pdfConverter;
+        private readonly PdfGenerator _pdfConverter;
 
-        public ConvertionManager(ImagesReader imagesReader, ILogger<ConvertionManager> logger, PdfConverter pdfConverter)
+        public ConvertionManager(
+            ImagesReader imagesReader, 
+            ILogger<ConvertionManager> logger, 
+            PdfGenerator pdfConverter)
         {
             _logger = logger;
             _imagesReader = imagesReader;
             _pdfConverter = pdfConverter;
         }
 
-        public void StartProcess(string imagesOriginalFolder, string pdfFileName, string folderToPlacePdf)
+        public void StartProcess(string imagesOriginalFolder)
         {
             _logger.LogInformation("Iniciando processo de conversão de imagem...");
             var imagesPaths = _imagesReader.GetListOfImages(imagesOriginalFolder);
@@ -24,9 +28,10 @@ namespace Conversor.Services
             {
                 _logger.LogInformation($"Obtidas {imagesPaths.Count} imagens.");
 
-                /*IMPLEMENTAR LÓGICA QUE GERA O PDF*/
+                _pdfConverter.GenerateForImages(imagesPaths);
 
                 _logger.LogInformation("Finalizado processo de conversão.");
+                return;
             }
 
             _logger.LogError($"Uma exceção ocorreu durante a obtenção das imagens.");

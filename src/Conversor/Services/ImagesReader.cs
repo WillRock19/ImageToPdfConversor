@@ -8,18 +8,20 @@ namespace Conversor.Services
 {
     public class ImagesReader
     {
-        private const string filesExtension = "*.jpg";
+        private const string FilesExtension = "*.jpg";
         private readonly IFileSystem _fileSystem;
+
+        protected ImagesReader() { }
 
         public ImagesReader(IFileSystem fileSystem) => 
             _fileSystem = fileSystem;
 
-        public List<string> GetListOfImages(string folderPath)
+        public virtual List<string> GetListOfImages(string folderPath)
         {
             try
             {
-                var imagesNames = _fileSystem.Directory.GetFiles(folderPath, filesExtension, SearchOption.TopDirectoryOnly);
-                var imagesFullPath = new List<string>();
+                var imagesNames = _fileSystem
+                    .Directory.GetFiles(folderPath, FilesExtension, SearchOption.TopDirectoryOnly);
 
                 return imagesNames.ToList();
             }

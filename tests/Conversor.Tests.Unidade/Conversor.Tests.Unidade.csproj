@@ -16,7 +16,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\..\src\Conversor\Conversor.csproj" />
+    <ProjectReference Include="..\..\src\Conversor\Converter.csproj" />
   </ItemGroup>
 
 </Project>
