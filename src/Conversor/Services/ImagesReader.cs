@@ -29,5 +29,20 @@ namespace Conversor.Services
                 return null;
             }
         }
+
+        public virtual List<string> GetListOfSubDirectorys(string folderPath)
+        {
+            try
+            {
+                var subDirectories = _fileSystem
+                    .Directory.GetDirectories(folderPath);
+
+                return subDirectories.Where(x => !x.Contains("01.Pdfs")).ToList();
+            }
+            catch (Exception e)
+            {
+                return null;
+            }
+        }
     }
 }

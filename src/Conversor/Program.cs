@@ -15,27 +15,30 @@ namespace Conversor
 
         static void Main(string[] args)
         {
-            Console.WriteLine("Insira o caminho da pasta com as imagens.");
+            Console.WriteLine("Insira o caminho do diretório principal.");
             var contentFolderPath = Console.ReadLine();
 
-            Console.WriteLine("Insira o nome do arquivo que deseja gerar.");
-            var resultFileName = Console.ReadLine();
+            //Console.WriteLine("Insira o caminho da pasta com as imagens.");
+            //var contentFolderPath = Console.ReadLine();
 
-            Console.WriteLine("Insira o caminho em que quer salvar o PDF gerado.");
-            var pathToSavePdfGenerated = Console.ReadLine();
+            //Console.WriteLine("Insira o nome do arquivo que deseja gerar.");
+            //var resultFileName = Console.ReadLine();
+
+            //Console.WriteLine("Insira o caminho em que quer salvar o PDF gerado.");
+            //var pathToSavePdfGenerated = Console.ReadLine();
 
             _userInput = new UserInput
             {
                 ImagesPath = contentFolderPath,
-                PathToSavePdfGenerated = pathToSavePdfGenerated,
-                PdfFileName = resultFileName
+                PathToSavePdfGenerated = @"C:\teste_pdf\teste",
+                PdfFileName = "teste"
             };
 
             try {
                 ConfigureServiceProvider();
 
                 var manager = _serviceProvider.GetService<ConvertionManager>();
-                manager.StartProcess(contentFolderPath);
+                manager.StartProcessForSubdirectories(contentFolderPath);
             }
             catch (Exception e) {
 
@@ -60,7 +63,7 @@ namespace Conversor
                 .AddSingleton<IFileSystem, FileSystem>()
                 .AddSingleton<ImagesReader>()
                 .AddSingleton<PdfGenerator>()
-                .AddSingleton(x => new PdfDocument(new PdfWriter(_userInput.GenerateGeneratedPdfCompletePath())))
+                .AddSingleton(x => new PdfDocument(new PdfWriter(_userInput.GeneratedPdfCompletePath())))
                 .BuildServiceProvider();
         }
 

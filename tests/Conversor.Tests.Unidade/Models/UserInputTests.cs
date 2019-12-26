@@ -23,7 +23,7 @@ namespace Conversor.Tests.Unidade.Models
                 PdfFileName = PdfFileName
             };
 
-            userInput.GenerateGeneratedPdfCompletePath().Should().Be(_expectedPdfFilePath);
+            userInput.GeneratedPdfCompletePath().Should().Be(_expectedPdfFilePath);
         }
 
         [TestCase(TestName = "GenerateGeneratedPdfCompletePath deve retornar caminho correto se nome do arquivo tiver extensão '.pdf'")]
@@ -35,7 +35,7 @@ namespace Conversor.Tests.Unidade.Models
                 PdfFileName = $"{PdfFileName}.pdf"
             };
 
-            userInput.GenerateGeneratedPdfCompletePath().Should().Be(_expectedPdfFilePath);
+            userInput.GeneratedPdfCompletePath().Should().Be(_expectedPdfFilePath);
         }
     }
 }

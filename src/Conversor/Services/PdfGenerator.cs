@@ -50,6 +50,21 @@ namespace Conversor.Services
             document.Close();
         }
 
+        public virtual void GenerateForImagesWithDocument(List<string> imagesPath, PdfDocument documentToUse)
+        {
+            var firstImage = new Image(ImageDataFactory.Create(imagesPath.FirstOrDefault()));
+            var document = new Document(documentToUse, 
+                new PageSize(firstImage.GetImageWidth(), firstImage.GetImageHeight()));
+
+            foreach (var imagePath in imagesPath)
+            {
+                var image = new Image(ImageDataFactory.Create(imagePath));
+                _pdfDocument.AddNewPage(new PageSize(image.GetImageWidth(), image.GetImageHeight()));
+                document.Add(image);
+            }
+            document.Close();
+        }
+
         private Document GenerateInitialDocumentPage(string firstImagePath)
         {
             var firstImage = new Image(ImageDataFactory.Create(firstImagePath));

@@ -8,7 +8,7 @@
 
         public string PathToSavePdfGenerated { get; set; }
 
-        public string GenerateGeneratedPdfCompletePath()
+        public string GeneratedPdfCompletePath()
         {
             var cleanedFileName = PdfFileName.Replace(".pdf", string.Empty);
             return $@"{PathToSavePdfGenerated}\{cleanedFileName}.pdf";
